@@ -1,13 +1,14 @@
 from rest_framework import serializers, fields
-from ordertakeouts.models.model_users import Users
-from ordertakeouts.models.model_orders import Orders
+# from django.contrib.auth.models import User
+from ordertakeouts.models.users import Users
+from ordertakeouts.models.orders import Orders
 
-from .serializer_orders import OrdersSerializer
+from .orders import OrderSerializer
 
 
-class UsersSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     
-    order_user = OrdersSerializer(many=True, read_only=True)
+    order_user = OrderSerializer(many=True, read_only=True)
 
     class Meta:
         model = Users

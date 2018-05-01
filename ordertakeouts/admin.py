@@ -1,7 +1,7 @@
 from django.contrib import admin
-from ordertakeouts.models.model_locations import Locations
-from ordertakeouts.models.model_orders import Orders
-from ordertakeouts.models.model_users import Users
+from ordertakeouts.models.locations import Locations
+from ordertakeouts.models.orders import Orders
+from ordertakeouts.models.users import Users
 
 
 admin.site.register(Locations)

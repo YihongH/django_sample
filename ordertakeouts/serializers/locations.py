@@ -1,12 +1,12 @@
 from rest_framework import serializers, fields
-from ordertakeouts.models.model_locations import Locations
-from ordertakeouts.models.model_orders import Orders
-from .serializer_orders import OrdersSerializer
+from ordertakeouts.models.locations import Locations
+from ordertakeouts.models.orders import Orders
+from .orders import OrderSerializer
 
 
-class LocationsSerializer(serializers.ModelSerializer):
+class LocationSerializer(serializers.ModelSerializer):
     
-    order_location = OrdersSerializer(many=True, read_only=True)
+    order_location = OrderSerializer(many=True, read_only=True)
     
     class Meta:
         model = Locations

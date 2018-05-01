@@ -1,8 +1,8 @@
 from rest_framework import serializers, fields
-from ordertakeouts.models.model_orders import Orders
+from ordertakeouts.models.orders import Orders
 
 
-class OrdersSerializer(serializers.ModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
 
     location = serializers.StringRelatedField(many=False, read_only=True)
     user = serializers.StringRelatedField(many=False, read_only=True)
