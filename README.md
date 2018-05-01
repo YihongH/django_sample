@@ -1,30 +1,34 @@
-$ virtualenv .env
+$ virtualenv -p python3 .env
 
 $ source .env/bin/activate
 
-$ pip install -r /path/to/requirements.txt
+$ pip install -r requirement.txt
 
 $ cd django_samples
 
 
-起docker
+run docker
 
 $ docker pull postgres
 
-$ docker run --name mypostgres -e POSTGRES_DB=2ulife -e POSTGRES_USER=yihong -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres
+$ docker run --name 2udatabase -e POSTGRES_DB=2ulife -e POSTGRES_USER=${username} -e POSTGRES_PASSWORD=${password} -p 5432:5432 -d postgres
 
-$ psql -h localhost -U yihong -d 2ulife
+$ psql -h localhost -U ${username} -d 2ulife
 
-user: yihong
-
-password: secret
-
-
-
-$ python manage.py runserver
-
-$ python manage.py makemigrations
+##### apply migration schema
 
 $ python manage.py migrate
 
-$ python project/manage.py createsuperuser
+##### run server
+
+$ python manage.py runserver
+
+##### generate migration schema
+$ python manage.py makemigrations
+
+##### create an admin user
+$ python manage.py createsuperuser
+
+
+##### swagger
+http://localhost:8000/docs/
