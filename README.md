@@ -17,11 +17,11 @@ $ psql -h localhost -U ${username} -d 2ulife
 
 ##### apply migration schema
 
-$ python manage.py migrate
+$ python manage.py migrate --settings=django_samples.settings.local
 
 ##### run server
 
-$ python manage.py runserver
+$ python manage.py runserver --settings=django_samples.settings.local
 
 ##### generate migration schema
 $ python manage.py makemigrations
