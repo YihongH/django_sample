@@ -29,6 +29,8 @@ $ python manage.py makemigrations
 ##### create an admin user
 $ python manage.py createsuperuser
 
+##### load database seeder
+$ python manage.py runserver loaddata db.json
 
 ##### swagger
 http://localhost:8000/docs/

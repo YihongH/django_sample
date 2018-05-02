@@ -53,6 +53,9 @@ class OrderList(generics.ListCreateAPIView):
         orders = Orders.objects.filter(location=location_id)
         return orders
 
+    def perform_create(self, serializer):
+        serializer.save(location_id=self.kwargs.get(self.lookup_url_kwarg))
+
 class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Orders.objects.all()
     serializer_class = OrderSerializer
