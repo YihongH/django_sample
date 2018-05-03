@@ -9,6 +9,7 @@ from .serializers.orders import OrderSerializer
 # from rest_framework.permissions import IsAuthenticated
 # from rest_framework.response import Response
 # from django.shortcuts import get_object_or_404
+# import pdb; pdb.set_trace()
 
 
 
@@ -46,15 +47,26 @@ class LocationDetail(generics.RetrieveUpdateDestroyAPIView):
 class OrderList(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
 
-    lookup_url_kwarg = "location_id"
+    lookup_url_kwarg_id = "location_id"
+
 
     def get_queryset(self):
-        location_id = self.kwargs.get(self.lookup_url_kwarg)
+        location_id = self.kwargs.get(self.lookup_url_kwarg_id)
         orders = Orders.objects.filter(location=location_id)
+        created_time = self.request.GET.get('created_time')
+        # created_time = param.get('created_time')
+        # print(created_time);
+        # print(type(created_time));
+        # orders = Orders.objects.all();
+        if created_time is not None:
+            orders = Orders.objects.filter(location=location_id, created_time__year=created_time[:4],
+                                                                 created_time__month=created_time[4:6],
+                                                                 created_time__day=created_time[6:])                                                     
+                                                            
         return orders
 
     def perform_create(self, serializer):
-        serializer.save(location_id=self.kwargs.get(self.lookup_url_kwarg))
+        serializer.save(location_id=self.kwargs.get(self.lookup_url_kwarg_id))
 
 class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Orders.objects.all()

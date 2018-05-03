@@ -16,9 +16,11 @@ from .views import LocationList, LocationDetail, OrderList, OrderDetail, UserLis
 urlpatterns = [
     url(r'^locations/$', LocationList.as_view()),
     url(r'^locations/(?P<pk>[0-9]+)$', LocationDetail.as_view()),
-    url(r'^locations/(?P<location_id>[0-9]+)/orders/$', OrderList.as_view()),
+    url(r'^locations/(?P<location_id>[0-9]+)/orders$', OrderList.as_view()),
+    # url(r'^locations/(?P<location_id>[0-9]+)/orders?created_time=(?P<year>[0-9]{4})(?P<month>[0-9]{2})(?P<day>[0-9]{2})/$', OrderList.as_view()),
     url(r'^orders/(?P<pk>[0-9]+)$', OrderDetail.as_view()),
     url(r'^users/$', UserList.as_view()),
     url(r'^users/(?P<pk>[0-9]+)$', UserDetail.as_view()),
+
 
 ]
