@@ -1,5 +1,7 @@
 from django.conf.urls import url, include
-from .views import LocationList, LocationDetail, OrderList, OrderDetail, UserList, UserDetail
+from .views.locations import LocationList, LocationDetail
+from .views.orders import OrderList, OrderDetail
+from .views.users import UserList, UserDetail
 # from rest_framework.routers import DefaultRouter
 
 
