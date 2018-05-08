@@ -1,7 +1,7 @@
-from rest_framework import serializers, fields
-from ordertakeouts.models.locations import Locations
-from ordertakeouts.models.orders import Orders
-from .orders import OrderSerializer
+from rest_framework import serializers
+from ordertakeouts.models.location import Location
+from ordertakeouts.models.order import Order
+from .order import OrderSerializer
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -9,7 +9,7 @@ class LocationSerializer(serializers.ModelSerializer):
     order_location = OrderSerializer(many=True, read_only=True)
     
     class Meta:
-        model = Locations
+        model = Location
         fields = ('id', 'name', 'address', 'created_time', 'updated_time', 'order_location')
 
     # def create(self, validated_data):

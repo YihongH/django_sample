@@ -1,18 +1,23 @@
-from rest_framework import serializers, fields
+from rest_framework import serializers
 # from django.contrib.auth.models import User
-from ordertakeouts.models.users import Users
-from ordertakeouts.models.orders import Orders
+from ordertakeouts.models.user import User
+from ordertakeouts.models.order import Order
+from .order import OrderSerializer
 
-from .orders import OrderSerializer
+from django.contrib.auth import get_user_model
+# from django.contrib.auth.models import User
 
 
-class UserSerializer(serializers.ModelSerializer):
+
+
+
+# class UserSerializer(serializers.ModelSerializer):
     
-    order_user = OrderSerializer(many=True, read_only=True)
+#     order_user = OrderSerializer(many=True, read_only=True)
 
-    class Meta:
-        model = Users
-        fields = ('id', 'first_name', 'last_name', 'email', 'phone', 'created_time', 'updated_time', 'order_user')
+#     class Meta:
+#         model = User
+#         fields = ('id', 'first_name', 'last_name', 'email', 'phone', 'created_time', 'updated_time', 'order_user')
         
     # def create(self, validated_data):
     #     orders_data = validated_data.pop('order_user')
@@ -40,10 +45,29 @@ class UserSerializer(serializers.ModelSerializer):
     #         order.save()
     #     return instance  
 
+UserModel = get_user_model()
 
 
+class UserSerializer(serializers.ModelSerializer):
 
-	
+    password = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+
+        user = UserModel.objects.create(
+            username=validated_data['username'],
+            email=validated_data['email']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+
+        return user
+
+    class Meta:
+        model = UserModel
+        fields = ('username', 'email', 'password')
+
+
 
 
 

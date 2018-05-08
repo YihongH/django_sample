@@ -11,9 +11,9 @@ run docker
 
 $ docker pull postgres
 
-$ docker run --name 2udatabase -e POSTGRES_DB=2ulife -e POSTGRES_USER=${username} -e POSTGRES_PASSWORD=${password} -p 5432:5432 -d postgres
+$ docker run --name 2udatabase -e POSTGRES_DB=2udatabase -e POSTGRES_USER=${username} -e POSTGRES_PASSWORD=${password} -p 5432:5432 -d postgres
 
-$ psql -h localhost -U ${username} -d 2ulife
+$ psql -h localhost -U ${username} -d 2udatabase
 
 ##### apply migration schema
 

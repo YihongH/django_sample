@@ -1,6 +1,5 @@
-from rest_framework import serializers, fields
-from ordertakeouts.models.orders import Orders
-
+from rest_framework import serializers
+from ordertakeouts.models.order import Order
 
 class OrderSerializer(serializers.ModelSerializer):
 
@@ -9,7 +8,7 @@ class OrderSerializer(serializers.ModelSerializer):
     # user_order = UsersSerializer(many=False, read_only=True)
 
     class Meta:
-        model = Orders
+        model = Order
         fields = ('id', 'created_time', 'updated_time', 'comment', 'status', 'location', 'user', 'deleted')
 
     # def create(self, validated_data):
@@ -35,8 +34,8 @@ class OrderSerializer(serializers.ModelSerializer):
     #         order.user = order_data.get('user', order.user)
     #         order.save()
     #     return instance  
-
-
+    
+    
 
 
 	

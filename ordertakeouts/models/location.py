@@ -1,6 +1,6 @@
 from django.db import models
 
-class Locations(models.Model):
+class Location(models.Model):
 	name = models.CharField(max_length=50)
 	address = models.CharField(max_length=100)
 	created_time = models.DateTimeField(auto_now_add=True)
@@ -10,4 +10,6 @@ class Locations(models.Model):
 		return '%s: %s' % (self.name, self.address)
 
 	class Meta:
-		db_table = "locations"
+		db_table = 'location'
+		verbose_name = 'location'
+		verbose_name_plural = 'locations'
