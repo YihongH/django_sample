@@ -1,4 +1,6 @@
+
 from django.db import models
+
 # from django.contrib.auth.models import User
 # from django.db.models.signals import post_save
 # from django.dispatch import receiver
@@ -8,22 +10,6 @@ from django.contrib.auth.models import (
 )
 
 
-
-# class Users(models.Model):
-
-#     password = models.CharField(max_length=50)
-#     first_name = models.CharField(max_length=50)
-#     last_name = models.CharField(max_length=50)
-#     email = models.EmailField()
-#     phone = models.CharField(max_length=15)
-#     created_time = models.DateTimeField(auto_now_add=True)
-#     updated_time = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return '%s: %s' % (self.username, self.email) 
-
-#     class Meta:
-#         db_table = "users"
 class UserManager(BaseUserManager):
 
     def create_user(self, email, username, password=None):
@@ -103,8 +89,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
 
-
-
     def get_full_name(self):
         '''
         Returns the first_name plus the last_name, with a space in between.
@@ -124,6 +108,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         '''
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
+  
 
 
 
