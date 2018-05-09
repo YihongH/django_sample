@@ -1,3 +1,0 @@
-> /Users/Yihong/Work/django_samples/ordertakeouts/views.py(37)<module>()
--> class LocationList(generics.ListCreateAPIView):
-(Pdb) 

@@ -1,7 +1,7 @@
 from django.db import models
 # from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
 
 from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin, BaseUserManager
@@ -59,7 +59,7 @@ class UserManager(BaseUserManager):
 
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
     username = models.CharField(max_length=50)
@@ -80,9 +80,8 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = ['username']
 
     class Meta:
-        db_table = 'user'
-        verbose_name = 'user'
-        verbose_name_plural = 'users'
+        db_table = 'users'
+
 
     def __str__(self):
         return self.email

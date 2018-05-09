@@ -4,7 +4,7 @@ $ source .env/bin/activate
 
 $ pip install -r requirement.txt
 
-$ cd django_samples
+$ cd takeout
 
 
 run docker
@@ -17,11 +17,11 @@ $ psql -h localhost -U ${username} -d 2udatabase
 
 ##### apply migration schema
 
-$ python manage.py migrate --settings=django_samples.settings.local
+$ python manage.py migrate --settings=takeout.settings.local
 
 ##### run server
 
-$ python manage.py runserver --settings=django_samples.settings.local
+$ python manage.py runserver --settings=takeout.settings.local
 
 ##### generate migration schema
 $ python manage.py makemigrations

@@ -30,7 +30,17 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
 
-def update_users(request, user_id):
-    user = User.objects.get(pk=user_id)
-    user.users.bio = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit...'
-    user.save()
+# def update_users(request, user_id):
+#     user = User.objects.get(pk=user_id)
+#     user.users.bio = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit...'
+#     user.save()
+
+# @api_view(['POST'])
+# @permission_classes((AllowAny,))
+# def create_user(request):
+#     serialized = UserSerializer(data=request.data)
+#     if serialized.is_valid():
+#         serialized.save()
+#         return Response(serialized.data, status=status.HTTP_201_CREATED)
+#     else:
+#         return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)

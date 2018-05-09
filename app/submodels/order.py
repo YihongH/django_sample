@@ -10,13 +10,12 @@ class Order(models.Model):
 	comment = models.TextField()
 	status= models.CharField(choices=STATUS_CHOICES, max_length=1)
 	location = models.ForeignKey('Location', on_delete=models.SET_NULL, related_name='order_location', null=True)
-	user = models.ForeignKey('User', on_delete=models.SET_NULL, related_name='order_user', null=True)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='order_user', null=True)
 	deleted = models.CharField(choices=TAG_CHOICES, max_length=1, default = 'N')
 
 	class Meta:
-		db_table = 'order'
-		verbose_name = 'order'
-		verbose_name_plural = 'orders'
+		db_table = 'orders'
+
 
 	def delete(self, using=None): 
 		self.deleted = 'Y'

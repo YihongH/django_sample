@@ -10,6 +10,4 @@ class Location(models.Model):
 		return '%s: %s' % (self.name, self.address)
 
 	class Meta:
-		db_table = 'location'
-		verbose_name = 'location'
-		verbose_name_plural = 'locations'
+		db_table = 'locations'
