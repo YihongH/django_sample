@@ -1,4 +1,4 @@
-## Install dependency
+### Install dependency
 
 #### pre-requisite: install pipenv
 
@@ -14,7 +14,7 @@ $ pipenv install
 
 $ pipenv shell
 
-## Loval Dev Environment
+### Local Dev Environment
 
 #### Run docker
 
