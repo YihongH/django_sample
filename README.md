@@ -1,13 +1,22 @@
-$ virtualenv -p python3 .env
+## Install dependency
 
-$ source .env/bin/activate
+#### pre-requisite: install pipenv
 
-$ pip install -r requirement.txt
+$ brew install pipenv
 
-$ cd takeout
+#### Create a new virtual environment
 
+$ sh setEnv.sh
 
-run docker
+$ pipenv install
+
+#### activate virtual environment
+
+$ pipenv shell
+
+## Loval Dev Environment
+
+#### Run docker
 
 $ docker pull postgres
 
@@ -15,9 +24,17 @@ $ docker run --name 2udatabase -e POSTGRES_DB=2udatabase -e POSTGRES_USER=${user
 
 $ psql -h localhost -U ${username} -d 2udatabase
 
+#### copy to generate local database property and fill in the information
+
+cp takeout/settings/local-template.py car_dealer/settings/local.py
+
 ##### apply migration schema
 
 $ python manage.py migrate --settings=takeout.settings.local
+
+#### seed test data
+
+$ python manage.py loaddata app/fixtures/\*.json
 
 ##### run server
 
@@ -28,9 +45,6 @@ $ python manage.py makemigrations
 
 ##### create an admin user
 $ python manage.py createsuperuser
-
-##### load database seeder
-$ python manage.py runserver loaddata db.json
 
 ##### swagger
 http://localhost:8000/docs/
