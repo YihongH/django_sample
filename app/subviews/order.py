@@ -1,6 +1,8 @@
 from rest_framework import generics
 from app.models import *
 from app.serializers import *
+from rolepermissions.mixins import HasRoleMixin
+from rolepermissions.mixins import HasPermissionsMixin
 
 # from rest_framework.permissions import IsAuthenticated
 # from rest_framework.response import Response
@@ -10,7 +12,8 @@ from app.serializers import *
 
 
 
-class OrderList(generics.ListCreateAPIView):
+class OrderList(HasRoleMixin, generics.ListAPIView):
+    allowed_roles = 'Delivery'
     serializer_class = OrderSerializer
     # queryset=Orders.objects.all();
 
@@ -23,18 +26,24 @@ class OrderList(generics.ListCreateAPIView):
         # self.request.query_params: <QueryDict: {'created_time': ['2018-05-07']}>
         # self.kwargs: {'location_id': '1'}
         # import pdb; pdb.set_trace()
-        if created_time is not None:
+        if created_time:
             self.kwargs['created_time__contains'] = created_time
             # self.kwargs: {'location_id': '1', 'created_time__contains': '2018-05-07'}
         return Order.objects.filter(**self.kwargs);
 
 
+class OrderCreate(HasRoleMixin, generics.CreateAPIView):
+    allowed_roles = 'Customer'
+    serializer_class = OrderSerializer
+    
     def perform_create(self, serializer):
         import pdb; pdb.set_trace()
         # serializer.save(location_id=self.kwargs.get(self.lookup_url_kwarg_id))
         
         serializer.save(user=self.request.user, location_id=self.kwargs['location_id'])
 
-class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
+
+class OrderDetail(HasPermissionsMixin, generics.RetrieveUpdateAPIView):
+    required_permission = 'access_order'
     queryset = Order.objects.all()
     serializer_class = OrderSerializer

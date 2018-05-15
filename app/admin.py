@@ -4,6 +4,8 @@ from rest_framework import serializers
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from rolepermissions.admin import RolePermissionsUserAdminMixin
+
 
 
 
@@ -58,8 +60,7 @@ class UserChangeSerializer(serializers.ModelSerializer):
         # field does not have access to the initial value
         return self.initial["password"]
 
-
-class UserAdmin(BaseUserAdmin):
+class UserAdmin(RolePermissionsUserAdminMixin, BaseUserAdmin):
     # The forms to add and change user instances
     serializer_class = UserCreationSerializer
     add_serializer_class = UserChangeSerializer
@@ -86,8 +87,9 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
+
 # Now register the new UserAdmin...
 admin.site.register(User, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
-admin.site.unregister(Group)
+# admin.site.unregister(Group)

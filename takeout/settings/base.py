@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'app',
     'rest_framework',
     'rest_framework_swagger',
+    'rolepermissions',
 ]
 
 MIDDLEWARE = [
@@ -123,11 +124,13 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = { 
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300)
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
 
-LOGIN_URL = 'rest_framework:login'
-LOGOUT_URL = 'rest_framework:logout'
 
 AUTH_USER_MODEL = 'app.User'
+
+ROLEPERMISSIONS_MODULE = 'app.roles'
+
+# ROLEPERMISSIONS_REGISTER_ADMIN = True
 
