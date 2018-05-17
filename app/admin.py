@@ -73,7 +73,8 @@ class UserAdmin(RolePermissionsUserAdminMixin, BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('username','first_name','last_name', 'phone')}),
-        ('Permissions', {'fields': ('is_admin','is_active')}),
+        ('Permissions', {'fields': ('is_admin','is_active','groups', 'user_permissions')}),
+        # ('Important dates', {'fields': ('last_login', 'created_time')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -86,7 +87,6 @@ class UserAdmin(RolePermissionsUserAdminMixin, BaseUserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
-
 
 # Now register the new UserAdmin...
 admin.site.register(User, UserAdmin)

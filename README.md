@@ -2,7 +2,9 @@
 
 #### pre-requisite: install pipenv
 
-$ brew install pipenv
+'''python
+brew install pipenv
+'''
 
 #### Create a new virtual environment
 

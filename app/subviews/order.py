@@ -12,8 +12,9 @@ from rolepermissions.mixins import HasPermissionsMixin
 
 
 
-class OrderList(HasRoleMixin, generics.ListAPIView):
-    allowed_roles = 'Delivery'
+class OrderList(generics.ListAPIView):
+# class OrderList(HasRoleMixin, generics.ListAPIView):
+    # allowed_roles = 'Delivery'
     serializer_class = OrderSerializer
     # queryset=Orders.objects.all();
 
@@ -31,19 +32,20 @@ class OrderList(HasRoleMixin, generics.ListAPIView):
             # self.kwargs: {'location_id': '1', 'created_time__contains': '2018-05-07'}
         return Order.objects.filter(**self.kwargs);
 
-
-class OrderCreate(HasRoleMixin, generics.CreateAPIView):
-    allowed_roles = 'Customer'
+class OrderCreate(generics.CreateAPIView):
+# class OrderCreate(HasRoleMixin, generics.CreateAPIView):
+    # allowed_roles = 'Customer'
     serializer_class = OrderSerializer
     
     def perform_create(self, serializer):
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         # serializer.save(location_id=self.kwargs.get(self.lookup_url_kwarg_id))
         
         serializer.save(user=self.request.user, location_id=self.kwargs['location_id'])
 
 
-class OrderDetail(HasPermissionsMixin, generics.RetrieveUpdateAPIView):
-    required_permission = 'access_order'
+class OrderDetail(generics.RetrieveUpdateAPIView):
+# class OrderDetail(HasPermissionsMixin, generics.RetrieveUpdateAPIView):
+    # required_permission = 'access_order'
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
