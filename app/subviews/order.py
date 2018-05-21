@@ -31,14 +31,12 @@ class OrderList(generics.ListCreateAPIView):
             # self.kwargs: {'location_id': '1', 'created_time__contains': '2018-05-07'}
         return Order.objects.filter(**self.kwargs);
 
-
+    # import pdb; pdb.set_trace()
     def perform_create(self, serializer):
         # import pdb; pdb.set_trace()
-        # serializer.save(location_id=self.kwargs.get(self.lookup_url_kwarg_id))
-        
+        # serializer.save(location_id=self.kwargs.get(self.lookup_url_kwarg_id))    
         serializer.save(user=self.request.user, location_id=self.kwargs['location_id'])
-
-
+   
 
 class OrderDetail(generics.RetrieveUpdateAPIView):
   
