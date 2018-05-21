@@ -4,8 +4,8 @@ from rest_framework import serializers
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from rolepermissions.admin import RolePermissionsUserAdminMixin
-
+from django.contrib import admin, auth
+# from guardian.admin import GuardedModelAdmin
 
 
 
@@ -13,7 +13,7 @@ admin.site.register(Location)
 admin.site.register(Order)
 # admin.site.register(User)
 
-
+UserModel = auth.get_user_model()
 
 
 class UserCreationSerializer(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class UserCreationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField()
 
     class Meta:
-        model = User
+        model = UserModel
         fields = ('email', 'username')
 
     def clean_password2(self):
@@ -51,7 +51,7 @@ class UserChangeSerializer(serializers.ModelSerializer):
     password = ReadOnlyPasswordHashField()
 
     class Meta:
-        model = User
+        model = UserModel
         fields = ('email', 'password', 'username', 'is_active', 'is_admin')
 
     def clean_password(self):
@@ -60,7 +60,8 @@ class UserChangeSerializer(serializers.ModelSerializer):
         # field does not have access to the initial value
         return self.initial["password"]
 
-class UserAdmin(RolePermissionsUserAdminMixin, BaseUserAdmin):
+class UserAdmin(BaseUserAdmin):
+# class UserAdmin(GuardedModelAdmin):
     # The forms to add and change user instances
     serializer_class = UserCreationSerializer
     add_serializer_class = UserChangeSerializer
@@ -86,10 +87,11 @@ class UserAdmin(RolePermissionsUserAdminMixin, BaseUserAdmin):
     )
     search_fields = ('email',)
     ordering = ('email',)
-    filter_horizontal = ()
+    filter_horizontal = ('groups', 'user_permissions',)
 
 # Now register the new UserAdmin...
-admin.site.register(User, UserAdmin)
+# admin.site.unregister(UserModel)
+admin.site.register(UserModel, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 # admin.site.unregister(Group)

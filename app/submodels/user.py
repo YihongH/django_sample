@@ -37,7 +37,9 @@ class UserManager(BaseUserManager):
             password=password,
             username=username,
         )
+
         user.is_admin = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
@@ -57,6 +59,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    
 
 
     objects = UserManager()
@@ -67,46 +70,57 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = 'users'
+        # permissions = (
+        #     ('view_user', 'View user'),
+        # )
 
 
     def __str__(self):
         return self.email
 
-    def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
-        # Simplest possible answer: Yes, always
-        return True
+    # def has_perm(self, perm, obj=None):
+    #     "Does the user have a specific permission?"
+    #     # Simplest possible answer: Yes, always
+    #     if self.is_active and self.is_superuser:
+    #         return True
 
-    def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
-        # Simplest possible answer: Yes, always
-        return True
+    #     return _user_has_perm(self, perm, obj)
+        # return True
 
-    @property
+
+
+    # def has_module_perms(self, app_label):
+    #     "Does the user have permissions to view the app `app_label`?"
+    #     # Simplest possible answer: Yes, always
+    #     if self.is_active and self.is_superuser:
+    #         return True
+
+    #     return _user_has_module_perms(self, app_label)
+
+    # # @property
+    # @property
     def is_staff(self):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+    # def get_full_name(self):
+    #     '''
+    #     Returns the first_name plus the last_name, with a space in between.
+    #     '''
+    #     full_name = '%s %s' % (self.first_name, self.last_name)
+    #     return full_name.strip()
 
+    # def get_short_name(self):
+    #     '''
+    #     Returns the short name for the user.
+    #     '''
+    #     return self.first_name
 
-    def get_full_name(self):
-        '''
-        Returns the first_name plus the last_name, with a space in between.
-        '''
-        full_name = '%s %s' % (self.first_name, self.last_name)
-        return full_name.strip()
-
-    def get_short_name(self):
-        '''
-        Returns the short name for the user.
-        '''
-        return self.first_name
-
-    def email_user(self, subject, message, from_email=None, **kwargs):
-        '''
-        Sends an email to this User.
-        '''
-        send_mail(subject, message, from_email, [self.email], **kwargs)
+    # def email_user(self, subject, message, from_email=None, **kwargs):
+    #     '''
+    #     Sends an email to this User.
+    #     '''
+    #     send_mail(subject, message, from_email, [self.email], **kwargs)
 
   
 

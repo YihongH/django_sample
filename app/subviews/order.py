@@ -1,8 +1,8 @@
 from rest_framework import generics
 from app.models import *
 from app.serializers import *
-from rolepermissions.mixins import HasRoleMixin
-from rolepermissions.mixins import HasPermissionsMixin
+# from rolepermissions.mixins import HasRoleMixin
+# from rolepermissions.mixins import HasPermissionsMixin
 
 # from rest_framework.permissions import IsAuthenticated
 # from rest_framework.response import Response
@@ -12,9 +12,8 @@ from rolepermissions.mixins import HasPermissionsMixin
 
 
 
-class OrderList(generics.ListAPIView):
-# class OrderList(HasRoleMixin, generics.ListAPIView):
-    # allowed_roles = 'Delivery'
+class OrderList(generics.ListCreateAPIView):
+
     serializer_class = OrderSerializer
     # queryset=Orders.objects.all();
 
@@ -32,11 +31,7 @@ class OrderList(generics.ListAPIView):
             # self.kwargs: {'location_id': '1', 'created_time__contains': '2018-05-07'}
         return Order.objects.filter(**self.kwargs);
 
-class OrderCreate(generics.CreateAPIView):
-# class OrderCreate(HasRoleMixin, generics.CreateAPIView):
-    # allowed_roles = 'Customer'
-    serializer_class = OrderSerializer
-    
+
     def perform_create(self, serializer):
         # import pdb; pdb.set_trace()
         # serializer.save(location_id=self.kwargs.get(self.lookup_url_kwarg_id))
@@ -44,8 +39,8 @@ class OrderCreate(generics.CreateAPIView):
         serializer.save(user=self.request.user, location_id=self.kwargs['location_id'])
 
 
+
 class OrderDetail(generics.RetrieveUpdateAPIView):
-# class OrderDetail(HasPermissionsMixin, generics.RetrieveUpdateAPIView):
-    # required_permission = 'access_order'
+  
     queryset = Order.objects.all()
     serializer_class = OrderSerializer

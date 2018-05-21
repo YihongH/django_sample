@@ -12,7 +12,7 @@ from rest_framework import permissions
 from rest_framework import viewsets
 
 from rest_framework import status
-from django.contrib.auth import login, authenticate
+# from django.contrib.auth import login, authenticate
 from rest_framework.views import APIView
 
 

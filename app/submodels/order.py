@@ -14,7 +14,10 @@ class Order(models.Model):
 	deleted = models.CharField(choices=TAG_CHOICES, max_length=1, default = 'N')
 
 	class Meta:
-		db_table = 'orders'
+		db_table = 'orders' 
+		# permissions = (
+  #           ('view_order', 'View order'),
+  #       )
 
 
 	def delete(self, using=None): 

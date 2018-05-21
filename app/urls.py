@@ -20,13 +20,15 @@ from rest_framework_jwt.views import verify_jwt_token
 urlpatterns = [
     url(r'^location$', LocationList.as_view()),
     url(r'^location/(?P<pk>[0-9]+)$', LocationDetail.as_view()),
-    url(r'^location/(?P<location_id>[0-9]+)/orderList$', OrderList.as_view()),
+    
+    url(r'^location/(?P<location_id>[0-9]+)$', OrderList.as_view()),
     # url(r'^locations/(?P<location_id>[0-9]+)/orders?created_time=(?P<year>[0-9]{4})(?P<month>[0-9]{2})(?P<day>[0-9]{2})/$', OrderList.as_view()),
     url(r'^order/(?P<pk>[0-9]+)$', OrderDetail.as_view()),
-    url(r'^location/(?P<location_id>[0-9]+)/orderCreate$', OrderCreate.as_view()),
+    
     url(r'^user$', UserList.as_view()),
     url(r'^user/(?P<pk>[0-9]+)$', UserDetail.as_view()),
 
+    
     url(r'^user/register$', CreateUserView.as_view()),
     url(r'^user/token$', obtain_jwt_token),
     url(r'^user/token/refresh$', refresh_jwt_token),

@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'app',
     'rest_framework',
     'rest_framework_swagger',
-    'rolepermissions',
+    # 'guardian',
 ]
 
 MIDDLEWARE = [
@@ -130,7 +130,4 @@ JWT_AUTH = {
 
 AUTH_USER_MODEL = 'app.User'
 
-ROLEPERMISSIONS_MODULE = 'app.roles'
-
-# ROLEPERMISSIONS_REGISTER_ADMIN = True
 
