@@ -5,7 +5,9 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib import admin, auth
-# from guardian.admin import GuardedModelAdmin
+# from rolepermissions.admin import RolePermissionsUserAdminMixin
+from guardian.admin import GuardedModelAdmin
+
 
 
 
@@ -52,7 +54,7 @@ class UserChangeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserModel
-        fields = ('email', 'password', 'username', 'is_active', 'is_admin')
+        fields = ('email', 'password', 'username', 'is_active', 'is_staff')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -60,7 +62,7 @@ class UserChangeSerializer(serializers.ModelSerializer):
         # field does not have access to the initial value
         return self.initial["password"]
 
-class UserAdmin(BaseUserAdmin):
+class UserAdmin(GuardedModelAdmin):
 # class UserAdmin(GuardedModelAdmin):
     # The forms to add and change user instances
     serializer_class = UserCreationSerializer
@@ -69,12 +71,12 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'username', 'is_admin')
-    list_filter = ('is_admin',)
+    list_display = ('email', 'username', 'is_staff')
+    list_filter = ('is_staff',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('username','first_name','last_name', 'phone')}),
-        ('Permissions', {'fields': ('is_admin','is_active','groups', 'user_permissions')}),
+        ('Permissions', {'fields': ('is_staff','is_active','groups', 'user_permissions')}),
         # ('Important dates', {'fields': ('last_login', 'created_time')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin

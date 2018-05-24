@@ -11,6 +11,7 @@ class Location(models.Model):
 
 	class Meta:
 		db_table = 'locations'
-		# permissions = (
-  #           ('view_location', 'View location'),
-  #       )
+		permissions = (
+            ('view_location', 'Can view location'),
+        )
+	

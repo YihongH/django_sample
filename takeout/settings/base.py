@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'app',
     'rest_framework',
     'rest_framework_swagger',
-    # 'guardian',
+    'guardian',
 ]
 
 MIDDLEWARE = [
@@ -130,4 +130,10 @@ JWT_AUTH = {
 
 AUTH_USER_MODEL = 'app.User'
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # this is default
+    'guardian.backends.ObjectPermissionBackend',
+)
 
+
+GUARDIAN_GET_INIT_ANONYMOUS_USER = 'app.models.get_anonymous_user_instance'

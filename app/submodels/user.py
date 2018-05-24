@@ -38,11 +38,10 @@ class UserManager(BaseUserManager):
             username=username,
         )
 
-        user.is_admin = True
+        user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
         return user
-
 
 
 
@@ -58,9 +57,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     updated_time = models.DateTimeField(auto_now_add=True)
 
     is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     
-
 
     objects = UserManager()
 
@@ -70,39 +68,20 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = 'users'
-        # permissions = (
-        #     ('view_user', 'View user'),
-        # )
-
+        permissions = (
+            ('view_user', 'Can view user'),
+        )
+  
 
     def __str__(self):
         return self.email
 
-    # def has_perm(self, perm, obj=None):
-    #     "Does the user have a specific permission?"
-    #     # Simplest possible answer: Yes, always
-    #     if self.is_active and self.is_superuser:
-    #         return True
-
-    #     return _user_has_perm(self, perm, obj)
-        # return True
-
-
-
-    # def has_module_perms(self, app_label):
-    #     "Does the user have permissions to view the app `app_label`?"
-    #     # Simplest possible answer: Yes, always
-    #     if self.is_active and self.is_superuser:
-    #         return True
-
-    #     return _user_has_module_perms(self, app_label)
-
-    # # @property
     # @property
-    def is_staff(self):
-        "Is the user a member of staff?"
-        # Simplest possible answer: All admins are staff
-        return self.is_admin
+    # def is_staff(self):
+    #     "Is the user a member of staff?"
+    #     # Simplest possible answer: All admins are staff
+    #     return self.is_admin
+
     # def get_full_name(self):
     #     '''
     #     Returns the first_name plus the last_name, with a space in between.
@@ -122,6 +101,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     #     '''
     #     send_mail(subject, message, from_email, [self.email], **kwargs)
 
+import datetime
+
+def get_anonymous_user_instance(User):
+    return User(email='Anonymous@gmail.com', username='Anonymous')
   
 
 

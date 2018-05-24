@@ -24,7 +24,8 @@ urlpatterns = [
     url(r'^location/(?P<location_id>[0-9]+)/order$', OrderList.as_view()),
     # url(r'^locations/(?P<location_id>[0-9]+)/orders?created_time=(?P<year>[0-9]{4})(?P<month>[0-9]{2})(?P<day>[0-9]{2})/$', OrderList.as_view()),
     url(r'^order/(?P<pk>[0-9]+)$', OrderDetail.as_view()),
-    
+
+  
     url(r'^user$', UserList.as_view()),
     url(r'^user/(?P<pk>[0-9]+)$', UserDetail.as_view()),
 

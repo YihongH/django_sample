@@ -1,6 +1,9 @@
 from rest_framework import generics
 from app.models import *
 from app.serializers import *
+from guardian.shortcuts import assign_perm
+from app.permissions import OrderPermission
+from guardian.core import ObjectPermissionChecker
 # from rolepermissions.mixins import HasRoleMixin
 # from rolepermissions.mixins import HasPermissionsMixin
 
@@ -13,32 +16,30 @@ from app.serializers import *
 
 
 class OrderList(generics.ListCreateAPIView):
-
+    # import pdb; pdb.set_trace()
+    permission_classes =  (OrderPermission, )
     serializer_class = OrderSerializer
+        
     # queryset=Orders.objects.all();
-
-    def get_queryset(self):
-    # self: <app.views.orders.OrderList object at 0x107d308d0>
-    
-        # import pdb; pdb.set_trace();                                                                                         
+    def get_queryset(self): 
         created_time = self.request.query_params.get('created_time', None)
-        # self.request: <rest_framework.request.Request object at 0x107d309e8>
-        # self.request.query_params: <QueryDict: {'created_time': ['2018-05-07']}>
-        # self.kwargs: {'location_id': '1'}
-        # import pdb; pdb.set_trace()
         if created_time:
             self.kwargs['created_time__contains'] = created_time
-            # self.kwargs: {'location_id': '1', 'created_time__contains': '2018-05-07'}
-        return Order.objects.filter(**self.kwargs);
-
+        queryset = Order.objects.filter(**self.kwargs)
+        checker = ObjectPermissionChecker(self.request.user) 
+        checker.prefetch_perms(queryset)                                                               
+        return [query for query in queryset if checker.has_perm('app.view_order', query)]
+  
     # import pdb; pdb.set_trace()
     def perform_create(self, serializer):
-        # import pdb; pdb.set_trace()
-        # serializer.save(location_id=self.kwargs.get(self.lookup_url_kwarg_id))    
-        serializer.save(user=self.request.user, location_id=self.kwargs['location_id'])
-   
+        # import pdb; pdb.set_trace()   
+        instance = serializer.save(user=self.request.user, location_id=self.kwargs['location_id'])
+        assign_perm("app.change_order", self.request.user, instance)
+        assign_perm("app.delete_order", self.request.user, instance)
+        assign_perm("app.view_order", self.request.user, instance)
+ 
 
 class OrderDetail(generics.RetrieveUpdateAPIView):
-  
+    
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
