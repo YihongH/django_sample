@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 import datetime
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -108,6 +109,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # this is default
+    'guardian.backends.ObjectPermissionBackend',
+)
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -130,10 +136,16 @@ JWT_AUTH = {
 
 AUTH_USER_MODEL = 'app.User'
 
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend', # this is default
-    'guardian.backends.ObjectPermissionBackend',
+
+# GUARDIAN_GET_INIT_ANONYMOUS_USER = 'app.models.get_anonymous_user_instance'
+
+VIEWSET_METHOD_REGISTRY = (
+    "get_queryset",
+    "get_serializer_class",
+    "perform_create",
+    "perform_update",
+    "perform_destroy",
 )
+# from django.contrib.auth.models import Group
+# ROLE_GROUPS = [group.name.lower() for group in Group.objects.all()]
 
-
-GUARDIAN_GET_INIT_ANONYMOUS_USER = 'app.models.get_anonymous_user_instance'

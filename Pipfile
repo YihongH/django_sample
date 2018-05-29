@@ -10,6 +10,7 @@ djangorestframework = '>=3.8.2'
 psycopg2-binary = '>=2.7.4'
 djangorestframework-jwt = '>=1.11.0'
 django-guardian = "*"
+django-rest-framework-roles = "*"
 
 [requires]
 python_version = '3.6'

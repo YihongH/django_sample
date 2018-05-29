@@ -4,6 +4,7 @@ from app.serializers import *
 from guardian.shortcuts import assign_perm
 from app.permissions import OrderPermission
 from guardian.core import ObjectPermissionChecker
+from drf_roles.mixins import RoleViewSetMixin
 # from rolepermissions.mixins import HasRoleMixin
 # from rolepermissions.mixins import HasPermissionsMixin
 
@@ -13,15 +14,27 @@ from guardian.core import ObjectPermissionChecker
 # from datetime import datetime
 
 
-
-
-class OrderList(generics.ListCreateAPIView):
+class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
     # import pdb; pdb.set_trace()
     permission_classes =  (OrderPermission, )
     serializer_class = OrderSerializer
-        
+   
+    
     # queryset=Orders.objects.all();
-    def get_queryset(self): 
+    def get_queryset_for_admin(self):
+        created_time = self.request.query_params.get('created_time', None)
+        if created_time:
+            self.kwargs['created_time__contains'] = created_time
+        return Order.objects.filter(**self.kwargs)
+
+    def get_queryset_for_delivery(self):
+        created_time = self.request.query_params.get('created_time', None)
+        if created_time:
+            self.kwargs['created_time__contains'] = created_time
+        return Order.objects.filter(**self.kwargs)
+
+    def get_queryset_for_customer(self): 
+        import pdb; pdb.set_trace()
         created_time = self.request.query_params.get('created_time', None)
         if created_time:
             self.kwargs['created_time__contains'] = created_time
@@ -29,7 +42,7 @@ class OrderList(generics.ListCreateAPIView):
         checker = ObjectPermissionChecker(self.request.user) 
         checker.prefetch_perms(queryset)                                                               
         return [query for query in queryset if checker.has_perm('app.view_order', query)]
-  
+       
     # import pdb; pdb.set_trace()
     def perform_create(self, serializer):
         # import pdb; pdb.set_trace()   

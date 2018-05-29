@@ -48,6 +48,8 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
 
+
+
     email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
     username = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50, blank=True)
@@ -58,7 +60,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    
+
 
     objects = UserManager()
 
@@ -76,35 +78,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-    # @property
-    # def is_staff(self):
-    #     "Is the user a member of staff?"
-    #     # Simplest possible answer: All admins are staff
-    #     return self.is_admin
 
-    # def get_full_name(self):
-    #     '''
-    #     Returns the first_name plus the last_name, with a space in between.
-    #     '''
-    #     full_name = '%s %s' % (self.first_name, self.last_name)
-    #     return full_name.strip()
+# import datetime
 
-    # def get_short_name(self):
-    #     '''
-    #     Returns the short name for the user.
-    #     '''
-    #     return self.first_name
-
-    # def email_user(self, subject, message, from_email=None, **kwargs):
-    #     '''
-    #     Sends an email to this User.
-    #     '''
-    #     send_mail(subject, message, from_email, [self.email], **kwargs)
-
-import datetime
-
-def get_anonymous_user_instance(User):
-    return User(email='Anonymous@gmail.com', username='Anonymous')
+# def get_anonymous_user_instance(User):
+#     return User(email='Anonymous@gmail.com', username='Anonymous')
   
 
 

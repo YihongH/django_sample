@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.conf import settings
-from guardian.models import UserObjectPermissionBase
-from guardian.models import GroupObjectPermissionBase
+
+# from guardian.models import UserObjectPermissionBase
+# from guardian.models import GroupObjectPermissionBase
 
 class Order(models.Model):
 	STATUS_CHOICES = ('P', 'pending'), ('D', 'delivered')
@@ -30,9 +31,3 @@ class Order(models.Model):
 		self.save()
 
 
-class OrderUserObjectPermission(UserObjectPermissionBase):
-    content_object = models.ForeignKey(Order, on_delete=models.CASCADE)
-
-
-class OrderGroupObjectPermission(GroupObjectPermissionBase):
-    content_object = models.ForeignKey(Order, on_delete=models.CASCADE)
