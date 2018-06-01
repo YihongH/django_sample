@@ -4,8 +4,8 @@ from app.serializers import *
 from guardian.shortcuts import assign_perm
 from app.permissions import OrderPermission
 from guardian.core import ObjectPermissionChecker
-from drf_roles.mixins import RoleViewSetMixin
-
+# from drf_roles.mixins import RoleViewSetMixin
+from app.mixins import RoleViewSetMixin
 
 # from rest_framework.permissions import IsAuthenticated
 # from rest_framework.response import Response
@@ -15,6 +15,7 @@ from drf_roles.mixins import RoleViewSetMixin
 class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
 # class OrderList(generics.ListCreateAPIView):
     # import pdb; pdb.set_trace()
+   
     permission_classes =  (OrderPermission, )
     serializer_class = OrderSerializer
    
@@ -59,7 +60,7 @@ class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
         assign_perm("app.change_order", self.request.user, instance)
         assign_perm("app.delete_order", self.request.user, instance)
         assign_perm("app.view_order", self.request.user, instance)
- 
+
 
 class OrderDetail(generics.RetrieveUpdateAPIView):
     

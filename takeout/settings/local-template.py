@@ -6,7 +6,7 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '2udatabase',
+        'NAME': 'udatabase',
         'USER': '{username-changeme}',
         'PASSWORD': '{password-changeme}',
         'HOST': 'localhost',

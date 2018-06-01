@@ -3,35 +3,77 @@
 from django.db import migrations
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.management import create_permissions
-
-
+from django.contrib.contenttypes.models import ContentType
+# def seed_groups(apps, schema_editor):
+#     db_alias = schema_editor.connection.alias
+    
+#     Group.objects.using(db_alias).get_or_create(name='admin')
+#     Group.objects.using(db_alias).get_or_create(name='delivery')
+#     Group.objects.using(db_alias).get_or_create(name='customer')
 def add_group_permissions(apps, schema_editor):
 
+# Permissions are created in a post_migrate signal. 
+# They don't exist the first time migrations are run after a new model is added. 
+# It is probably easiest to run the post_migrate signal handler manually
     for app_config in apps.get_app_configs():
+        app_config.models_module = True
         create_permissions(app_config, apps=apps, verbosity=0)
+        app_config.models_module = None
 
-    group, created = Group.objects.get_or_create(name='admin')
+    def group_permissions(group_name, permissions):
+    # for app_config in apps.get_app_configs():
+    #     create_permissions(app_config, apps=apps, verbosity=0)
+
+        group, created = Group.objects.get_or_create(name=group_name)
+        if created:
+            for perm in permissions:
+                add_perm = Permission.objects.get(codename=perm)
+                group.permissions.add(add_perm)
+            group.save()
     
-    if created:
-        view_order = Permission.objects.get(codename='view_order')
-        group.permissions.add(view_order)
-        group.save()
+    # group, created = Group.objects.get_or_create(name='admin')
+    # if created:    
+    #     add_perm = Permission.objects.get(codename='view_order')
+    #     group.permissions.add(add_perm)
+    #     group.save()
+
+    # group, created = Group.objects.get_or_create(name='admin')
+    # if created:
+    #     perms_admin = ['view_order', 'delete_order', 'add_order', 'change_order', 'add_location', 'change_location', 'delete_location', 'view_location', 'view_user', 'change_user', 'delete_user']
+    #     for perm in perms_admin:
+    #         add_perm = Permission.objects.get(codename=perm)
+    #         group.permissions.add(add_perm)
+    #     group.save()
 
     
     # group, created = Group.objects.get_or_create(name='delivery') 
     # if created:
-    #     group.permissions.add(can_change_order, can_view_order)
-    #     logger.info('Delivery Group created')
+    #     perms_delivery = ['view_order', 'change_order', 'view_location', 'view_user']
+    #     for perm in perms_delivery:
+    #         add_perm = Permission.objects.get(codename=perm)
+    #         group.permissions.add(add_perm)
+    #     group.save()
 
 
     # group, created = Group.objects.get_or_create(name='customer') 
     # if created:
-    #     group.permissions.add(can_view_order, can_add_order, can_change_order)
-    #     logger.info('Customer Group created')
-
+    #     perms_customer = ['view_order', 'add_order', 'change_order', 'view_location']
+    #     for perm in perms_customer:
+    #         add_perm = Permission.objects.get(codename=perm)
+    #         group.permissions.add(add_perm)
+    #     group.save()
+    # perms_admin = ['view_order']
+    perms_admin = ['view_order', 'delete_order', 'add_order', 'change_order', 'add_location', 'change_location', 'delete_location', 'view_location', 'view_user', 'change_user', 'delete_user']
+    group_permissions('admin', perms_admin)
+    
+    perms_delivery = ['view_order', 'change_order', 'view_location', 'view_user']
+    group_permissions('delivery', perms_delivery)
+    
+    perms_customer = ['view_order', 'add_order', 'change_order', 'view_location']
+    group_permissions('customer', perms_customer)
 
 class Migration(migrations.Migration):
-
+    # initial = True
     dependencies = [
         ('app', '0001_initial'),
     ]

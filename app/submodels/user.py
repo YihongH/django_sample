@@ -1,6 +1,6 @@
 
 from django.db import models
-
+from django.contrib.auth.models import Group
 # from django.contrib.auth.models import User
 # from django.db.models.signals import post_save
 # from django.dispatch import receiver
@@ -43,8 +43,12 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def users_in_group1(self):
-        return Group.objects.get(name='group1').user_set.filter()
+    # def users_in_admin(self):
+    #     return Group.objects.get(name='admin').user_set.filter()
+    # def users_in_delivery(self):
+    #     return Group.objects.get(name='delivery').user_set.filter()
+    # def users_in_customer(self):
+    #     return Group.objects.get(name='customer').user_set.filter()
 
 
 
