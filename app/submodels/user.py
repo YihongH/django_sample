@@ -82,10 +82,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-import datetime
+# import datetime
 
-def get_anonymous_user_instance(User):
-    return User(email='Anonymous@gmail.com', username='Anonymous')
+# def get_anonymous_user_instance(User):
+#     return User(email='Anonymous@gmail.com', username='Anonymous')
   
 
 
