@@ -137,15 +137,7 @@ JWT_AUTH = {
 AUTH_USER_MODEL = 'app.User'
 
 
-# GUARDIAN_GET_INIT_ANONYMOUS_USER = 'app.models.get_anonymous_user_instance'
+GUARDIAN_GET_INIT_ANONYMOUS_USER = 'app.models.get_anonymous_user_instance'
 
-VIEWSET_METHOD_REGISTRY = (
-    "get_queryset",
-    "get_serializer_class",
-    "perform_create",
-    "perform_update",
-    "perform_destroy",
-)
-# from django.contrib.auth.models import Group
-# ROLE_GROUPS = [group.name.lower() for group in Group.objects.all()]
+
 

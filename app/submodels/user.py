@@ -43,6 +43,9 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def users_in_group1(self):
+        return Group.objects.get(name='group1').user_set.filter()
+
 
 
 
@@ -79,10 +82,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-# import datetime
+import datetime
 
-# def get_anonymous_user_instance(User):
-#     return User(email='Anonymous@gmail.com', username='Anonymous')
+def get_anonymous_user_instance(User):
+    return User(email='Anonymous@gmail.com', username='Anonymous')
   
 
 

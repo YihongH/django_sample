@@ -5,16 +5,15 @@ from guardian.shortcuts import assign_perm
 from app.permissions import OrderPermission
 from guardian.core import ObjectPermissionChecker
 from drf_roles.mixins import RoleViewSetMixin
-# from rolepermissions.mixins import HasRoleMixin
-# from rolepermissions.mixins import HasPermissionsMixin
+
 
 # from rest_framework.permissions import IsAuthenticated
 # from rest_framework.response import Response
 # from django.shortcuts import get_object_or_404
 # from datetime import datetime
 
-
 class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
+# class OrderList(generics.ListCreateAPIView):
     # import pdb; pdb.set_trace()
     permission_classes =  (OrderPermission, )
     serializer_class = OrderSerializer
@@ -43,6 +42,16 @@ class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
         checker.prefetch_perms(queryset)                                                               
         return [query for query in queryset if checker.has_perm('app.view_order', query)]
        
+    # def get_queryset(self): 
+    #     import pdb; pdb.set_trace()
+    #     created_time = self.request.query_params.get('created_time', None)
+    #     if created_time:
+    #         self.kwargs['created_time__contains'] = created_time
+    #     queryset = Order.objects.filter(**self.kwargs)
+    #     checker = ObjectPermissionChecker(self.request.user) 
+    #     checker.prefetch_perms(queryset)                                                               
+    #     return [query for query in queryset if checker.has_perm('app.view_order', query)]
+
     # import pdb; pdb.set_trace()
     def perform_create(self, serializer):
         # import pdb; pdb.set_trace()   

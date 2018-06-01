@@ -94,6 +94,3 @@ class UserAdmin(GuardedModelAdmin):
 # Now register the new UserAdmin...
 # admin.site.unregister(UserModel)
 admin.site.register(UserModel, UserAdmin)
-# ... and, since we're not using Django's built-in permissions,
-# unregister the Group model from admin.
-# admin.site.unregister(Group)
