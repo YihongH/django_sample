@@ -3,10 +3,6 @@ from rest_framework import generics
 from app.models import *
 from app.serializers import *
 
-# from rest_framework.permissions import IsAuthenticated
-# from rest_framework.response import Response
-# from django.shortcuts import get_object_or_404
-
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from rest_framework import viewsets

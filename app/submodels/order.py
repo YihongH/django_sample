@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.conf import settings
 
-# from guardian.models import UserObjectPermissionBase
-# from guardian.models import GroupObjectPermissionBase
 
 class Order(models.Model):
 	STATUS_CHOICES = ('P', 'pending'), ('D', 'delivered')

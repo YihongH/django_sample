@@ -51,8 +51,6 @@ class UserManager(BaseUserManager):
     #     return Group.objects.get(name='customer').user_set.filter()
 
 
-
-
 class User(AbstractBaseUser, PermissionsMixin):
 
 
@@ -91,8 +89,3 @@ class User(AbstractBaseUser, PermissionsMixin):
 # def get_anonymous_user_instance(User):
 #     return User(email='Anonymous@gmail.com', username='Anonymous')
   
-
-
-
-
-
