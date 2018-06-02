@@ -4,7 +4,7 @@ from app.models import *
 from .order import OrderSerializer
 from django.contrib.auth import get_user_model
 # from django.contrib.auth.models import User
- 
+from django.contrib.auth.models import Group
 
 UserModel = get_user_model()
 
@@ -22,6 +22,9 @@ class UserSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
+
+        group = Group.objects.get(name='customer')
+        user.groups.add(group)
 
         return user
 

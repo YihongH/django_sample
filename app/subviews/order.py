@@ -19,8 +19,8 @@ class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
     permission_classes =  (OrderPermission, )
     serializer_class = OrderSerializer
    
-    
-    # queryset=Orders.objects.all();
+    # import pdb; pdb.set_trace()
+    queryset=Order.objects.none();
     def get_queryset_for_admin(self):
         created_time = self.request.query_params.get('created_time', None)
         if created_time:
@@ -34,7 +34,6 @@ class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
         return Order.objects.filter(**self.kwargs)
 
     def get_queryset_for_customer(self): 
-        import pdb; pdb.set_trace()
         created_time = self.request.query_params.get('created_time', None)
         if created_time:
             self.kwargs['created_time__contains'] = created_time
@@ -42,7 +41,8 @@ class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
         checker = ObjectPermissionChecker(self.request.user) 
         checker.prefetch_perms(queryset)                                                               
         return [query for query in queryset if checker.has_perm('app.view_order', query)]
-       
+    
+
     # def get_queryset(self): 
     #     import pdb; pdb.set_trace()
     #     created_time = self.request.query_params.get('created_time', None)
