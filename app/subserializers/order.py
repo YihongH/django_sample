@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from app.models import Order
 
+
 class OrderSerializer(serializers.ModelSerializer):
 
     location = serializers.StringRelatedField(many=False, read_only=True)

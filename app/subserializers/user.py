@@ -1,13 +1,10 @@
 from rest_framework import serializers
-# from django.contrib.auth.models import User
-from app.models import *
-from .order import OrderSerializer
 from django.contrib.auth import get_user_model
-# from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 
-UserModel = get_user_model()
 
+
+UserModel = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -22,7 +19,8 @@ class UserSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
-
+        
+        # set users to default group Customer
         group = Group.objects.get(name='customer')
         user.groups.add(group)
 

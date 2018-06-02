@@ -1,12 +1,11 @@
 from rest_framework import generics
-from app.models import *
-from app.serializers import *
+from app.models import User
+from app.serializers import UserSerializer
 
 from django.contrib.auth import get_user_model
 from rest_framework import permissions
 from rest_framework import viewsets
 
-from rest_framework import status
 from rest_framework.views import APIView
 from app.permissions import CustomModelPermissions
 

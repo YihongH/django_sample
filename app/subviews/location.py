@@ -1,10 +1,7 @@
 from rest_framework import generics
-from app.models import *
-from app.serializers import *
+from app.models import Location
+from app.serializers import LocationSerializer
 from app.permissions import CustomModelPermissions
-
-# from app.permissions import LocationPermission
-
 # from datetime import datetime
 
 

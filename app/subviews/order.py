@@ -1,19 +1,17 @@
 from rest_framework import generics
-from app.models import *
-from app.serializers import *
+from app.models import Order
+from app.serializers import OrderSerializer
 from guardian.shortcuts import assign_perm
 from app.permissions import CustomObjectPermissions
 from app.permissions import OrderPermissions
 from guardian.core import ObjectPermissionChecker
 # from drf_roles.mixins import RoleViewSetMixin
 from app.mixins import RoleViewSetMixin
-
-# from rest_framework.permissions import IsAuthenticated
 # from datetime import datetime
+
 
 class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
 
-   
     permission_classes =  (OrderPermissions, )
     serializer_class = OrderSerializer
    
@@ -40,7 +38,7 @@ class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
         checker.prefetch_perms(queryset)                                                               
         return [query for query in queryset if checker.has_perm('app.view_order', query)]
     
-
+    
     def perform_create(self, serializer):
         instance = serializer.save(user=self.request.user, location_id=self.kwargs['location_id'])
         assign_perm("app.change_order", self.request.user, instance)
