@@ -15,8 +15,8 @@ def add_group_permissions(apps, schema_editor):
         create_permissions(app_config, apps=apps, verbosity=0)
         app_config.models_module = None
 
-    def group_permissions(group_name, permissions):
-        group, created = Group.objects.get_or_create(name=group_name)
+    def group_permissions(group_name, permissions, levelnumber):
+        group, created = Group.objects.get_or_create(name=group_name, level=levelnumber)
         if created:
             for perm in permissions:
                 add_perm = Permission.objects.get(codename=perm)
@@ -25,13 +25,13 @@ def add_group_permissions(apps, schema_editor):
     
     
     perms_admin = ['view_order', 'delete_order', 'add_order', 'change_order', 'add_location', 'change_location', 'delete_location', 'view_location', 'view_user', 'change_user', 'delete_user']
-    group_permissions('admin', perms_admin)
+    group_permissions('admin', perms_admin, 1)
     
     perms_delivery = ['view_order', 'change_order', 'view_location', 'view_user']
-    group_permissions('delivery', perms_delivery)
+    group_permissions('delivery', perms_delivery, 2)
     
     perms_customer = ['view_order', 'add_order', 'change_order', 'view_location']
-    group_permissions('customer', perms_customer)
+    group_permissions('customer', perms_customer, 3)
 
 class Migration(migrations.Migration):
     # initial = True
@@ -41,4 +41,5 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(add_group_permissions),
+        
     ]

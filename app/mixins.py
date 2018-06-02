@@ -38,8 +38,8 @@ class RoleViewSetMixin(object):
         if len(user_role) < 1:
             raise RoleError("The user is not a member of any role groups")
         elif len(user_role) > 1:
-            user_groupid = min(group.id for group in user.groups.all())
-            return Group.objects.get(id=user_groupid).name
+            user_level = min(group.level for group in user.groups.all())
+            return Group.objects.get(level=user_level).name
         else:
             return user_role.pop()
 
