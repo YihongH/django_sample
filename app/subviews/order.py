@@ -2,7 +2,7 @@ from rest_framework import generics
 from app.models import *
 from app.serializers import *
 from guardian.shortcuts import assign_perm
-from app.permissions import OrderPermission
+from app.permissions import CustomObjectPermissions
 from guardian.core import ObjectPermissionChecker
 # from drf_roles.mixins import RoleViewSetMixin
 from app.mixins import RoleViewSetMixin
@@ -13,7 +13,7 @@ from app.mixins import RoleViewSetMixin
 class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
 
    
-    permission_classes =  (OrderPermission, )
+    permission_classes =  (CustomObjectPermissions, )
     serializer_class = OrderSerializer
    
     # import pdb; pdb.set_trace()

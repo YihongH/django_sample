@@ -1,5 +1,4 @@
 from rest_framework import generics
-# from django.contrib.auth.models import User
 from app.models import *
 from app.serializers import *
 
@@ -8,12 +7,12 @@ from rest_framework import permissions
 from rest_framework import viewsets
 
 from rest_framework import status
-# from django.contrib.auth import login, authenticate
 from rest_framework.views import APIView
-# from app.permissions import UserPermission
+from app.permissions import CustomModelPermissions
 
 
 class UserList(generics.ListAPIView):
+    permission_classes =  (CustomModelPermissions, )
     serializer_class = UserSerializer
     def get_queryset(self):
         return User.objects.all()
