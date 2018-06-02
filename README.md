@@ -43,7 +43,7 @@ python manage.py migrate --settings=takeout.settings.local
 ```
 #### seed test data
 ```
-python manage.py loaddata app/fixtures/\*.json
+python manage.py loaddata app/fixtures/db.json
 ```
 ##### run server
 ```
