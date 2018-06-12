@@ -23,6 +23,7 @@ class CreateLocationTest(APITestCase):
         self.assertEqual(response.data['address'], data['address'])
 
 class ReadLocationTest(APITestCase):
+    
     def setUp(self):
         self.test_superuser = User.objects.create_superuser('supertest@example.com','supertestuser', 'supertestpassword')
         self.client.force_authenticate(self.test_superuser)
