@@ -2,9 +2,6 @@ from app.models import User
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from app.views import UserList
-
-from app.serializers import UserSerializer
 
 
 class CreateUserTest(APITestCase):
@@ -32,7 +29,6 @@ class ReadUserTest(APITestCase):
                                         email='readuser@example.com',
                                         password='somepassword')
  
-        
     def test_read_user_list(self):
         response = self.client.get(reverse('user-list'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
