@@ -19,8 +19,6 @@ pipenv install
 pipenv shell
 ```
 
-### Local Dev Environment
-
 #### Run docker
 ```
 docker pull postgres
@@ -45,7 +43,7 @@ cp takeout/settings/local-template.py takeout/settings/local.py
 ```
 python manage.py migrate --settings=takeout.settings.local
 ```
-#### seed test data
+#### seed data
 ```
 python manage.py loaddata app/fixtures/db.json
 ```
@@ -63,3 +61,9 @@ python manage.py createsuperuser
 ```
 ##### swagger
 http://localhost:8000/docs/
+
+
+### Unit Test
+```
+python manage.py test
+```
