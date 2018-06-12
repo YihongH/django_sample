@@ -26,11 +26,11 @@ urlpatterns = [
     url(r'^order/(?P<pk>[0-9]+)$', OrderDetail.as_view()),
 
   
-    url(r'^user$', UserList.as_view()),
-    url(r'^user/(?P<pk>[0-9]+)$', UserDetail.as_view()),
+    url(r'^user$', UserList.as_view(), name='user-list'),
+    url(r'^user/(?P<pk>[0-9]+)$', UserDetail.as_view(), name='user-detail'),
 
     
-    url(r'^user/register$', CreateUserView.as_view()),
+    url(r'^user/register$', CreateUserView.as_view(), name='user-create'),
     url(r'^user/token$', obtain_jwt_token),
     url(r'^user/token/refresh$', refresh_jwt_token),
     url(r'^user/token/verify$', verify_jwt_token),
