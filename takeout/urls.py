@@ -18,7 +18,7 @@ from django.conf.urls import url, include
 from rest_framework_swagger.views import get_swagger_view
 
 schema_view = get_swagger_view(title='API')
-admin.autodiscover()
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('app.urls')),

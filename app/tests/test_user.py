@@ -40,5 +40,3 @@ class ReadUserTest(APITestCase):
     def test_read_user_detail(self):
         response = self.client.get(reverse('user-detail', args=[self.user.id]))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        
-
