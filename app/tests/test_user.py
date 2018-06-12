@@ -5,17 +5,15 @@ from rest_framework.test import APITestCase
 
 
 class CreateUserTest(APITestCase):
-    def setUp(self):
-        self.test_user = User.objects.create_user('test@example.com', 'testuser', 'testpassword')
-        self.create_url = reverse('user-create')
-
+    
     def test_create_user(self):
+        url = reverse('user-create')
         data = {
             'username': 'createuser',
             'email': 'createuser@example.com',
             'password': 'somepassword'
         }
-        response = self.client.post(self.create_url, data)
+        response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data['username'], data['username'])
         self.assertEqual(response.data['email'], data['email'])

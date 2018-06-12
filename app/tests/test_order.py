@@ -33,7 +33,7 @@ class ReadOrderTest(APITestCase):
                                                 
                                                  
     def test_read_order_list(self):
-        response = self.client.get(reverse('order-list', args=[self.location.id]))
+        response = self.client.get(reverse('order-list', kwargs={'location_id': self.location.id}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_read_order_detail(self):

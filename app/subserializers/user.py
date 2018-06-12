@@ -26,10 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
-    # def create(self, validated_data):
-    #     # Use the `create_user` method we wrote earlier to create a new user.
-    #     return UserModel.objects.create_user(**validated_data)
-
+  
     class Meta:
         model = UserModel
         fields = ('username', 'email', 'password')

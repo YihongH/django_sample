@@ -49,7 +49,6 @@ def register_fn(fn):
         return self._call_role_fn(fn, *args, **kwargs)
     setattr(RoleViewSetMixin, fn, inner)
 
-# Registers whitelist of ViewSet fns to override
 
 for fn in RoleViewSetMixin._viewset_method_registry:
     register_fn(fn)
