@@ -29,11 +29,11 @@ docker pull postgres
 docker run --name udatabase -e POSTGRES_DB=udatabase -e POSTGRES_USER=${username} -e POSTGRES_PASSWORD=${password} -p 5432:5432 -d postgres
 ```
 ```
-psql -h localhost -U ${username} -d 2udatabase
+psql -h localhost -U ${username} -d udatabase
 ```
 
 ```
-psql -h localhost -U ${username} -d 2udatabase -p 5432
+psql -h localhost -U ${username} -d udatabase -p 5432
 ```
 
 #### copy to generate local database property and fill in the information
