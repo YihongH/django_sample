@@ -30,11 +30,7 @@ docker run --name udatabase -e POSTGRES_DB=udatabase -e POSTGRES_USER=${username
 psql -h localhost -U ${username} -d udatabase
 ```
 
-```
-psql -h localhost -U ${username} -d udatabase -p 5432
-```
-
-#### copy to generate local database property and fill in the information
+#### copy to generate local database property and fill in the information (replace the username and password with your own username and password)
 ```
 cp takeout/settings/local-template.py takeout/settings/local.py
 ```
@@ -43,14 +39,19 @@ cp takeout/settings/local-template.py takeout/settings/local.py
 ```
 python manage.py migrate --settings=takeout.settings.local
 ```
-#### seed data
-```
-python manage.py loaddata app/fixtures/db.json
-```
+
 ##### run server
 ```
 python manage.py runserver --settings=takeout.settings.local
 ```
+
+### Unit Test
+```
+python manage.py test
+```
+
+
+
 ##### generate migration schema
 ```
 python manage.py makemigrations
@@ -60,10 +61,10 @@ python manage.py makemigrations
 python manage.py createsuperuser
 ```
 ##### swagger
+```
 http://localhost:8000/docs/
-
-
-### Unit Test
 ```
-python manage.py test
+
+##### seed data
 ```
+python manage.py loaddata app/fixtures/db.json
