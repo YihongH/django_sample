@@ -11,6 +11,7 @@ psycopg2-binary = '>=2.7.4'
 djangorestframework-jwt = '>=1.11.0'
 django-guardian = "*"
 django-rest-framework-roles = "*"
+gunicorn = "*"
 
 [requires]
 python_version = '3.6'
