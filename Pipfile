@@ -9,9 +9,9 @@ django-rest-swagger = '>=2.2.0'
 djangorestframework = '>=3.8.2'
 psycopg2-binary = '>=2.7.4'
 djangorestframework-jwt = '>=1.11.0'
-django-guardian = "*"
-django-rest-framework-roles = "*"
-gunicorn = "*"
+django-guardian = '>=1.4.9'
+django-rest-framework-roles = '>=0.5'
+gunicorn = '>=19.8.1'
 
 [requires]
 python_version = '3.6'
