@@ -4,22 +4,10 @@ from app.serializers import OrderSerializer
 from guardian.shortcuts import assign_perm
 from app.permissions import OrderPermissions
 from guardian.core import ObjectPermissionChecker
-from drf_roles.mixins import RoleViewSetMixin
+from app.mixins import RoleViewSetMixin
 from django.contrib.auth.models import Group
 
 
-DEFAULT_GROUPS = ('admin', 'delivery', 'customer')
-DEFAULT_REGISTRY = (
-    "get_queryset",
-    "get_serializer_class",
-    "perform_create",
-    "perform_update",
-    "perform_destroy",
-)
-
-class RoleError(Exception):
-    """Base class for exceptions in this module."""
-    pass
 
 class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
 
@@ -29,21 +17,6 @@ class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
     # import pdb; pdb.set_trace()
     queryset=Order.objects.none()
 
-    _viewset_method_registry = set(DEFAULT_REGISTRY)
-    _role_groups = set(DEFAULT_GROUPS)
-
-    def _get_role(self, user):
-        """Retrieves the given user's role"""
-        user_groups = set([group.name.lower() for group in user.groups.all()])
-        user_role = self._role_groups.intersection(user_groups)
-        
-        if len(user_role) < 1:
-            raise RoleError("The user is not a member of any role groups")
-        elif len(user_role) > 1:
-            user_level = min(group.level for group in user.groups.all())
-            return Group.objects.get(level=user_level).name
-        else:
-            return user_role.pop()
 
     def get_queryset_for_admin(self):
         created_time = self.request.query_params.get('created_time', None)
