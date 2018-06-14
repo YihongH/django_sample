@@ -19,7 +19,7 @@ pipenv install
 pipenv shell
 ```
 
-#### Run docker
+#### Run docker(replace the username and password with your own username and password)
 ```
 docker pull postgres
 ```
