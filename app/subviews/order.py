@@ -2,7 +2,6 @@ from rest_framework import generics
 from app.models import Order
 from app.serializers import OrderSerializer
 from guardian.shortcuts import assign_perm
-from app.permissions import CustomObjectPermissions
 from app.permissions import OrderPermissions
 from guardian.core import ObjectPermissionChecker
 from drf_roles.mixins import RoleViewSetMixin
