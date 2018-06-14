@@ -4,16 +4,18 @@ from app.models import Location
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
+from django.contrib.auth.models import Group
 
 
 class CreateOrderTest(APITestCase):
 
     def setUp(self):    
-        self.test_superuser = User.objects.create_superuser('supertest@example.com', 'supertestuser', 'supertestpassword')
-        self.client.force_authenticate(self.test_superuser)
+        self.test_user = User.objects.create_user('test@example.com', 'testuser', 'testpassword')
+        self.client.force_authenticate(self.test_user)
+        self.test_user.groups.add(Group.objects.get(name='admin'))
         self.location = Location.objects.create(name='location_name',
                                                 address='location_address')
-        self.create_url = reverse('order-list', args=[self.location.id])
+        self.create_url = reverse('order-list', kwargs={'location_id': self.location.id})
 
     def test_create_order(self):
         data = {
@@ -25,8 +27,9 @@ class CreateOrderTest(APITestCase):
 
 class ReadOrderTest(APITestCase):
     def setUp(self):
-        self.test_superuser = User.objects.create_superuser('supertest@example.com','supertestuser', 'supertestpassword')
-        self.client.force_authenticate(self.test_superuser)
+        self.test_user = User.objects.create_user('test@example.com','testuser', 'testpassword')
+        self.client.force_authenticate(self.test_user)
+        self.test_user.groups.add(Group.objects.get(name='admin'))
         self.location = Location.objects.create(name='location_name',
                                                 address='location_address')
         self.order = Order.objects.create(location_id = self.location.id, comment='test order')

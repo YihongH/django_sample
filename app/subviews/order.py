@@ -18,6 +18,10 @@ DEFAULT_REGISTRY = (
     "perform_destroy",
 )
 
+class RoleError(Exception):
+    """Base class for exceptions in this module."""
+    pass
+
 class OrderList(RoleViewSetMixin, generics.ListCreateAPIView):
 
     permission_classes =  (OrderPermissions, )

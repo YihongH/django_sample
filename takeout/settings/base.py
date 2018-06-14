@@ -138,7 +138,3 @@ JWT_AUTH = {
 AUTH_USER_MODEL = 'app.User'
 
 
-# GUARDIAN_GET_INIT_ANONYMOUS_USER = 'app.models.get_anonymous_user_instance'
-
-
-
