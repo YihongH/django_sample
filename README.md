@@ -7,7 +7,7 @@ brew install pipenv
 
 #### Create a new virtual environment
 ```
-sh setEnv.sh
+export PIPENV_VENV_IN_PROJECT=`pwd`
 ```
 
 ```
