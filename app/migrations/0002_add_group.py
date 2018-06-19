@@ -14,7 +14,7 @@ def add_group_permissions(apps, schema_editor):
         app_config.models_module = True
         create_permissions(app_config, apps=apps, verbosity=0)
         app_config.models_module = None
-
+    
     def group_permissions(group_name, permissions, levelnumber):
         group, created = Group.objects.get_or_create(name=group_name, level=levelnumber)
         if created:
