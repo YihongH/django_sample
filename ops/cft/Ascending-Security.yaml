@@ -7,6 +7,20 @@ Parameters:
     Description: Select a VPC with Subnets covering 2 Availability zone at least.
     MinLength: 1
 Resources:
+  JumpBoxSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Jumpbox security group
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+      Tags:
+        -
+          Key: Name
+          Value: JumpBoxSG
+      VpcId: !Ref VpcId
   CodeBuildRole:
     Type: "AWS::IAM::Role"
     Properties: 
@@ -56,6 +70,11 @@ Resources:
                   - "cloudformation:*"
                 Resource: "*"
 Outputs:
+  JumpBoxSG:
+    Value: !Ref 'JumpBoxSG'
+    Description: Jumpbox security group
+    Export: 
+      Name: !Sub "${AWS::StackName}-JumpBoxSG"
   CodeBuildRole:
     Value: !GetAtt 'CodeBuildRole.Arn'
     Description: CodeBuildRole arn

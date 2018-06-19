@@ -24,6 +24,10 @@ Resources:
         BuildSpec: |
           version: 0.2
           phases:
+            install:
+              commands:
+                - pip install pipenv
+                - export PIPENV_VENV_IN_PROJECT=`pwd` && pipenv install
             pre_build:
               commands:
                 - npm install
