@@ -34,20 +34,10 @@ psql -h localhost -U ${username} -d udatabase -p 5432
 ```
 cp takeout/settings/local-template.py takeout/settings/local.py
 ```
-#### move out 0001 and 0002 from ./app/migration, then enter pipenvshell, run
-```
-python manage.py makemigrations
-```
-#### move 0002 back to ./app/migration/
 
 ##### apply migration schema
 ```
 python manage.py migrate --settings=takeout.settings.local
-```
-
-##### run server
-```
-python manage.py runserver --settings=takeout.settings.local
 ```
 
 ### Unit Test
@@ -64,6 +54,10 @@ python manage.py makemigrations
 ##### create an admin user
 ```
 python manage.py createsuperuser
+```
+##### run server
+```
+python manage.py runserver --settings=takeout.settings.local
 ```
 ##### swagger
 ```
