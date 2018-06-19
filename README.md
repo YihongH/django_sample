@@ -42,7 +42,7 @@ python manage.py migrate --settings=takeout.settings.local
 
 ### Unit Test
 ```
-python manage.py test
+python manage.py test --settings=takout.seetings.{env}
 ```
 
 

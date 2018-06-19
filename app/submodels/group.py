@@ -9,7 +9,6 @@ class GroupProfile(models.Model):
 
     class Meta:
         db_table = 'groupProfile'
- 
 
     def __str__(self):
-        return self.group
+        return self.group.name

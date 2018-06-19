@@ -13,14 +13,17 @@ class Order(models.Model):
 	location = models.ForeignKey('Location', on_delete=models.SET_NULL, related_name='order_location', null=True)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='order_user', null=True)
 	deleted = models.CharField(choices=TAG_CHOICES, max_length=1, default = 'N')
-    
+
    
 
 	class Meta:
 		db_table = 'orders' 
 		permissions = (
-            ('view_order', 'Can view order'),
-        )
+			('view_order', 'Can view order'),
+		)
+
+	def __str__(self):
+		return self.id
 
 
 	

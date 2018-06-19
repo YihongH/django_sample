@@ -12,7 +12,7 @@ from guardian.admin import GuardedModelAdmin
 
 admin.site.register(Location)
 admin.site.register(Order)
-admin.site.register(GroupProfile)
+
 # admin.site.register(User)
 
 UserModel = auth.get_user_model()
@@ -94,3 +94,8 @@ class UserAdmin(GuardedModelAdmin):
 # Now register the new UserAdmin...
 # admin.site.unregister(UserModel)
 admin.site.register(UserModel, UserAdmin)
+
+
+class GroupProfileAdmin(admin.ModelAdmin):
+    list_display = ('group', 'level')
+admin.site.register(GroupProfile, GroupProfileAdmin)
