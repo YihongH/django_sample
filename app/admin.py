@@ -12,6 +12,7 @@ from guardian.admin import GuardedModelAdmin
 
 admin.site.register(Location)
 admin.site.register(Order)
+admin.site.register(GroupProfile)
 # admin.site.register(User)
 
 UserModel = auth.get_user_model()

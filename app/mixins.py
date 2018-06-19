@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group
+from app.models import GroupProfile
 
 # Default settings
 DEFAULT_GROUPS = ('admin', 'delivery', 'customer')
@@ -38,8 +39,8 @@ class RoleViewSetMixin(object):
         if len(user_role) < 1:
             raise RoleError("The user is not a member of any role groups")
         elif len(user_role) > 1:
-            user_level = min(group.level for group in user.groups.all())
-            return Group.objects.get(level=user_level).name
+            user_level = min(GroupProfile.objects.get(group=group).level for group in user.groups.all())
+            return GroupProfile.objects.get(level=user_level).group.name
         else:
             return user_role.pop()
 

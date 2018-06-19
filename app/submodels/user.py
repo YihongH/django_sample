@@ -88,5 +88,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 #     return User(email='Anonymous@gmail.com', username='Anonymous')
 
 
-Group.add_to_class('level', models.PositiveIntegerField(unique=True, null=True))
+# Group.add_to_class('level', models.PositiveIntegerField(unique=True, null=True))
 

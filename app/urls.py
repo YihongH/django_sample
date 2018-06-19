@@ -18,6 +18,7 @@ from rest_framework_jwt.views import verify_jwt_token
 
 
 urlpatterns = [
+   
     url(r'^location$', LocationList.as_view(), name='location-list'),
     url(r'^location/(?P<pk>[0-9]+)$', LocationDetail.as_view(), name='location-detail'),
     
