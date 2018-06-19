@@ -1,0 +1,43 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Cloudformation template to create mysql database
+Parameters:
+  SecurityStack:
+    Description: Name of an active CloudFormation stack that contains all SG resources
+    Type: String
+    Default: Ascending-Security
+  AllocatedStorage:
+    Type: Number
+    Description: Size of mysql rds (in GB)
+    Default: 20
+  DBInstanceClass:
+    Type: String
+    Description: Instance type of mysql
+    Default: db.t2.micro
+Resources:
+  DBParameterGroup:
+    Type: AWS::RDS::DBParameterGroup
+    Properties:
+      Description: Customized PostgreSQL database parameter group
+      Family: postgres10.7
+  MysqlInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AllocatedStorage: !Ref AllocatedStorage
+      DBInstanceClass: !Ref DBInstanceClass
+      DBInstanceIdentifier: ascendingdb
+      DBName: !Ref DBName
+      DBParameterGroupName: !Ref DBParameterGroup
+      DBSubnetGroupName: 
+        Fn::ImportValue: !Sub "${SubnetStack}-DBSubnetGroupId"
+      Engine: postgres
+      EngineVersion: 10.3
+      MasterUsername: !Ref MasterUsername
+      MasterUserPassword: !Ref MasterUserPassword
+      MultiAZ: True
+      Port: 3306
+      PubliclyAccessible: False
+      StorageType: gp2
+      VPCSecurityGroups:
+        - Fn::ImportValue: !Sub "${SecurityStack}-RdsSG"
+      StorageEncrypted: True
