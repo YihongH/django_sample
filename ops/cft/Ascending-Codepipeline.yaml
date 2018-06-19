@@ -1,0 +1,70 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Cloudformation template to create codebuild and codepipeline
+Parameters:
+  SecurityStack:
+    Description: Name of an active CloudFormation stack that contains all roles and SGs resources
+    Type: String
+    Default: Ascending-Security
+Resources:
+  AscendingUnitTest:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: no_artifacts
+      Description: Unit Test before Build and Deployment
+      Environment: 
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: python:3.6
+        Type: LINUX_CONTAINER
+      Name: AscendingUnitTest
+      ServiceRole: 
+        Fn::ImportValue: !Sub "${SecurityStack}-CodeBuildRole"
+      Source: 
+        BuildSpec: |
+          version: 0.2
+          phases:
+            pre_build:
+              commands:
+                - npm install
+            build:
+              commands:
+                - node jasmine.js
+        Location: https://github.com/YihongH/django_sample.git
+        Type: GITHUB
+  AscendingCodePipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      RoleArn: 
+        Fn::ImportValue: !Sub "${SecurityStack}-CodePipelineRole"
+      ArtifactStore:
+        Type: S3
+        Location: ascending-devops
+      Stages:
+        - Name: AscendingSource
+          Actions:
+            - Name: AscendingSource
+              ActionTypeId: 
+                Category: Source
+                Owner: AWS
+                Provider: CodeCommit
+                Version: 1
+              Configuration:
+                RepositoryName: TestApi
+                BranchName: master
+              OutputArtifacts:
+                - Name: AscendingSource
+              RunOrder: 1
+        - Name: AscendingUnitTest
+          Actions:
+            - Name: AscendingUnitTest
+              ActionTypeId: 
+                Category: Test
+                Owner: AWS
+                Provider: CodeBuild
+                Version: 1
+              Configuration:
+                ProjectName: !Ref AscendingUnitTest
+              InputArtifacts:
+                - Name: AscendingSource
+              RunOrder: 1

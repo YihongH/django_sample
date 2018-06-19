@@ -34,6 +34,11 @@ psql -h localhost -U ${username} -d udatabase
 ```
 cp takeout/settings/local-template.py takeout/settings/local.py
 ```
+#### move out 0001 and 0002 from ./app/migration, then enter pipenvshell, run
+```
+python manage.py makemigrations
+```
+#### move 0002 back to ./app/migration/
 
 ##### apply migration schema
 ```

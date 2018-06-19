@@ -1,0 +1,70 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Cloudformation template to create all SG and roles
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: Select a VPC with Subnets covering 2 Availability zone at least.
+    MinLength: 1
+Resources:
+  CodeBuildRole:
+    Type: "AWS::IAM::Role"
+    Properties: 
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - 
+            Effect: "Allow"
+            Principal: 
+              Service: 
+                - "codebuild.amazonaws.com"
+            Action: 
+              - "sts:AssumeRole"
+      Policies:
+        -
+          PolicyName: "CodeBuildRolePolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action: 
+                  - "cloudwatch:*"
+                Resource: "*"
+  CodePipelineRole:
+    Type: "AWS::IAM::Role"
+    Properties: 
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - 
+            Effect: "Allow"
+            Principal: 
+              Service: 
+                - "codepipeline.amazonaws.com"
+            Action: 
+              - "sts:AssumeRole"
+      Policies:
+        -
+          PolicyName: "CodePipelineRolePolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action: 
+                  - "cloudformation:*"
+                Resource: "*"
+Outputs:
+  CodeBuildRole:
+    Value: !GetAtt 'CodeBuildRole.Arn'
+    Description: CodeBuildRole arn
+    Export: 
+      Name: !Sub "${AWS::StackName}-CodeBuildRole"
+  CodePipelineRole:
+    Value: !GetAtt 'CodePipelineRole.Arn'
+    Description: CodePipelineRole arn
+    Export: 
+      Name: !Sub "${AWS::StackName}-CodePipelineRole"
+  StackName:
+    Value: !Ref AWS::StackName
