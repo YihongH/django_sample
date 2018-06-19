@@ -6,4 +6,5 @@ local.py
 .venv
 Pipfile
 Pipfile.lock
-
+ops
+test.py
